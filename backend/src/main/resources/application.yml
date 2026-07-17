@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: sakura-style
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/sakura_style}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:1234}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${SERVER_PORT:8081}
+
+sakura:
+  jwt:
+    secret: ${SAKURA_JWT_SECRET:sakura-style-local-dev-secret-change-me-256bits-min}
+    expiration-ms: ${SAKURA_JWT_EXPIRATION_MS:86400000}
+  import:
+    enabled: true
+    base-url: https://dummyjson.com
+    classpath-resource: data/imported-products.json
+    local-file-path: src/main/resources/data/imported-products.json
+    connect-timeout-ms: 15000
+    read-timeout-ms: 15000
+    min-expected-products: 50
+    usd-to-yen-rate: 150
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+logging:
+  level:
+    com.sakurastyle: INFO
+    org.springframework.security: INFO
